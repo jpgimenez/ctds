@@ -9,6 +9,8 @@ environment:
 
   BUILD_INSTALL_PREFIX: "C:\\usr\\local"
 
+  CIBW_SKIP: cp26-* cp27-*
+ 
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
 #    SQLSERVER_INSTANCENAME: "SQL2016"
@@ -49,6 +51,8 @@ cache:
 
 install:
   - "powershell appveyor\\install.ps1"
+# Create file '.cibuildwheel' so that extension build is not optional (c.f. setup.py).
+  - cmd: touch .cibuildwheel
 
 build_script:
   - "powershell appveyor\\build_script.ps1"
