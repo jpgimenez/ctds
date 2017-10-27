@@ -10,7 +10,7 @@ environment:
   BUILD_INSTALL_PREFIX: "C:\\usr\\local"
 
   CIBW_SKIP: cp26-* cp27-*
- 
+
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
 #    SQLSERVER_INSTANCENAME: "SQL2016"
@@ -60,6 +60,8 @@ build_script:
 artifacts:
   - path: "wheelhouse\\*.whl"
     name: Wheels
+  - path: "dist\\*.egg"
+    name: Eggs
 
 before_test:
   - "powershell appveyor\\before_test.ps1"
