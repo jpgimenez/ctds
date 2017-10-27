@@ -12,8 +12,6 @@ if (-not (Test-Path env:PYTHON))
     exit 1
 }
 
-pip install cibuildwheel==0.6.0
-
 # Set include and lib paths.
 $env:CTDS_INCLUDE_DIRS = "$env:BUILD_INSTALL_PREFIX\include"
 $env:CTDS_LIBRARY_DIRS= "$env:BUILD_INSTALL_PREFIX\lib"
@@ -23,6 +21,6 @@ $env:CTDS_COVER = 1
 
 & "$PSScriptRoot\build.cmd" "$env:PYTHON\python.exe" setup.py install
 
-cibuildwheel --output-dir wheelhouse
+& "$PSScriptRoot\build.cmd" "$env:PYTHON\python.exe" -m cibuildwheel --output-dir wheelhouse
 
 if ($LastExitCode -ne 0) { exit $LastExitCode }
