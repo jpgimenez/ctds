@@ -52,8 +52,6 @@ install:
 
 build_script:
   - "powershell appveyor\\build_script.ps1"
-  - pip install cibuildwheel==0.6.0
-  - cibuildwheel --output-dir wheelhouse
 
 artifacts:
   - path: "wheelhouse\\*.whl"
