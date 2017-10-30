@@ -9,3 +9,6 @@ if [ "$TRAVIS_OS_NAME" = "osx" ]; then
     # Travis-ci doesn't support docker support on OS X. Just verify ctds builds on OS X.
     pip install -v .
 fi
+
+pip install urllib3[secure]
+pip install cibuildwheel==0.6.0

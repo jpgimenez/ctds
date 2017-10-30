@@ -10,6 +10,5 @@ if [ "$TRAVIS_OS_NAME" != "osx" ]; then
 fi
 
 # build wheel
-pip install cibuildwheel==0.6.0
 cibuildwheel --output-dir wheelhouse
 
