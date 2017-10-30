@@ -21,6 +21,17 @@ $env:CTDS_COVER = 1
 
 & "$PSScriptRoot\build.cmd" "$env:PYTHON\python.exe" setup.py install
 
+# Install freetds (and dependencies).
+Add-AppveyorMessage -Message "Building FreeTDS ..." -Category Information
+& "$PSScriptRoot\..\windows\freetds-install.ps1"
+
+if ($LastExitCode -ne 0) { exit $LastExitCode }
+
+Add-AppveyorMessage -Message "FreeTDS build completed." -Category Information
+
+# Allow FreeTDS to be cached even on failure.
+$env:APPVEYOR_SAVE_CACHE_ON_ERROR = "True"
+
 & "$PSScriptRoot\build.cmd" "$env:PYTHON\python.exe" -m cibuildwheel --output-dir wheelhouse
 
 if ($LastExitCode -ne 0) { exit $LastExitCode }
