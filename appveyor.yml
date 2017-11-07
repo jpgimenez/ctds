@@ -11,6 +11,8 @@ environment:
 
   CIBW_SKIP: cp26-* cp27-*
 
+  FREETDS_VERSION: R1_00
+
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
 #    SQLSERVER_INSTANCENAME: "SQL2016"
@@ -43,7 +45,6 @@ environment:
 
 platform:
   - x64
-  - Any CPU
 
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
