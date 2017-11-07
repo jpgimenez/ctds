@@ -11,6 +11,10 @@ environment:
 
   CIBW_SKIP: cp26-* cp27-*
 
+platform:
+  - x64
+  - Any CPU
+
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
 #    SQLSERVER_INSTANCENAME: "SQL2016"
