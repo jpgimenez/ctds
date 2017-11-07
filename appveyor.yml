@@ -11,7 +11,7 @@ environment:
 
   CIBW_SKIP: cp26-* cp27-*
 
-  FREETDS_VERSION: R1_00
+  FREETDS_VERSION: 1.00.70
 
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
