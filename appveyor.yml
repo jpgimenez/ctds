@@ -66,7 +66,7 @@ artifacts:
   - path: "dist\\*"
 
 test_script:
-  - "build.cmd %PYTHON%\\python.exe setup.py test"
+  - "%PYTHON%\\python.exe setup.py test"
 
 after_test:
   - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
