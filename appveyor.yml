@@ -2,9 +2,6 @@ skip_commits:
   # Mimic Travis-ci skip behavior.
   message: /ci skip/
 
-image:
-  - Visual Studio 2015
-
 environment:
 
   # As defined by Appveyor.
