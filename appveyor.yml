@@ -11,6 +11,8 @@ environment:
 
   CIBW_SKIP: cp26-* cp27-*
 
+  FREETDS_VERSION: 1.00.70
+
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
 #    SQLSERVER_INSTANCENAME: "SQL2016"
@@ -56,23 +58,15 @@ cache:
   -  '%BUILD_INSTALL_PREFIX% -> appveyor.yml'
 
 install:
-  - "powershell appveyor\\install.ps1"
-# Create file '.cibuildwheel' so that extension build is not optional (c.f. setup.py).
-  - cmd: touch .cibuildwheel
+  - "%PYTHON%\\python.exe -m pip install wheel"
 
 build: off
-
-#build_script:
-#  - "powershell appveyor\\build_script.ps1"
 
 artifacts:
   - path: "dist\\*"
 
-before_test:
-  - "powershell appveyor\\before_test.ps1"
-
 test_script:
-  - "powershell appveyor\\test_script.ps1"
+  - "build.cmd %PYTHON%\\python.exe setup.py test"
 
 after_test:
   - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
