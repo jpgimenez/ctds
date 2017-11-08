@@ -2,6 +2,9 @@ skip_commits:
   # Mimic Travis-ci skip behavior.
   message: /ci skip/
 
+image:
+  - Visual Studio 2015
+
 environment:
 
   # As defined by Appveyor.
@@ -44,7 +47,7 @@ environment:
     SQLSERVER_INSTANCENAME: "SQL2016"
 
 platform:
-  - x64
+  - Any CPU
 
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
