@@ -24,6 +24,6 @@ else
     Add-AppveyorMessage -Message "Using cached version of FreeTDS." -Category Information
 }
 
-& "$env:PYTHON\Scripts\pip" install check-manifest codecov coverage
+& "$env:PYTHON\Scripts\pip" install check-manifest codecov coverage wheel
 
 if ($LastExitCode -ne 0) { exit $LastExitCode }
