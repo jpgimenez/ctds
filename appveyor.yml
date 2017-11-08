@@ -61,3 +61,6 @@ test_script:
 
 after_test:
   - "powershell appveyor\\after_test.ps1"
+
+artifacts:
+  - path: dist\*
