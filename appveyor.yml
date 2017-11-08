@@ -35,6 +35,7 @@ install:
 
 build_script:
   - "powershell appveyor\\build_script.ps1"
+  - "powershell appveyor\\build_script_wheel.ps1"
 
 before_test:
   - "powershell appveyor\\before_test.ps1"
