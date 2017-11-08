@@ -24,6 +24,10 @@ environment:
   matrix:
 
   - PYTHON: "C:\\Python36-x64"
+    PYTHON_VERSION: "3.6.1"
+    PYTHON_ARCH: "64"
+    ARCH: x86_64
+    VS_VER: "2015"
     SQLSERVER_INSTANCENAME: "SQL2016"
 
 init:
