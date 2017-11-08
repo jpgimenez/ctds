@@ -8,7 +8,3 @@ fi
 if [ "$TRAVIS_OS_NAME" != "osx" ]; then
     make check_${TRAVIS_PYTHON_VERSION};
 fi
-
-# build wheel
-cibuildwheel --output-dir wheelhouse
-

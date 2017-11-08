@@ -2,36 +2,42 @@ skip_commits:
   # Mimic Travis-ci skip behavior.
   message: /ci skip/
 
-os: Visual Studio 2015
-
 environment:
-
-  global:
-    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-    # /E:ON and /V:ON options are not enabled in the batch script intepreter
-    # See: http://stackoverflow.com/a/13751649/163740
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
-    OPENSSL_VER: 1.0.2g
-    FREETDS_VER: 0.95.95
 
   # As defined by Appveyor.
   SA_PASSWORD: "Password12!"
 
   BUILD_INSTALL_PREFIX: "C:\\usr\\local"
 
-  CIBW_SKIP: cp26-* cp27-*
-
   matrix:
-
-  - PYTHON: "C:\\Python36-x64"
-    PYTHON_VERSION: "3.6.1"
-    PYTHON_ARCH: "64"
-    ARCH: x86_64
-    VS_VER: "2015"
+  - PYTHON: "C:\\Python26-x64"
     SQLSERVER_INSTANCENAME: "SQL2016"
 
-init:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - PYTHON: "C:\\Python27-x64"
+    SQLSERVER_INSTANCENAME: "SQL2016"
+
+  - PYTHON: "C:\\Python33-x64"
+    SQLSERVER_INSTANCENAME: "SQL2016"
+    DISTUTILS_USE_SDK: "1"
+
+  - PYTHON: "C:\\Python34-x64"
+    SQLSERVER_INSTANCENAME: "SQL2016"
+    DISTUTILS_USE_SDK: "1"
+
+  - PYTHON: "C:\\Python35-x64"
+    SQLSERVER_INSTANCENAME: "SQL2016"
+
+  - PYTHON: "C:\\Python36-x64"
+    SQLSERVER_INSTANCENAME: "SQL2008R2SP2"
+
+  - PYTHON: "C:\\Python36-x64"
+    SQLSERVER_INSTANCENAME: "SQL2012SP1"
+
+  - PYTHON: "C:\\Python36-x64"
+    SQLSERVER_INSTANCENAME: "SQL2014"
+
+  - PYTHON: "C:\\Python36-x64"
+    SQLSERVER_INSTANCENAME: "SQL2016"
 
 # Note: Database services should *not* be specified in the services section.
 # The database service will be explicitly started by the script which enables
@@ -42,39 +48,16 @@ cache:
   -  '%BUILD_INSTALL_PREFIX% -> appveyor.yml'
 
 install:
-  - "%PYTHON%\\python.exe -m pip install wheel"
-
-  # Prepend current Python and scripts dirs to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - "pip install --disable-pip-version-check --user --upgrade pip"
-  - "pip install -e ."
-
-
-before_build:
-  # OpenSSL
-  - appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z || (ping -n 10 127.0.0.1 >"nul:" & appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z)
-  - 7z x openssl-%OPENSSL_VER%-vs%VS_VER%.7z
-  - ren openssl-%OPENSSL_VER%-vs%VS_VER% openssl
-  # FreeTDS
-  - "rmdir /s /q freetds\\vs%VS_VER%_%PYTHON_ARCH% || cmd /c \"exit /b 0\""
-  - appveyor DownloadFile https://github.com/ramiro/freetds/releases/download/v%FREETDS_VER%/freetds-v%FREETDS_VER%-win-%ARCH%-vs%VS_VER%.zip
-  - 7z x -ofreetds freetds-v%FREETDS_VER%-win-%ARCH%-vs%VS_VER%.zip
-  - mv freetds/freetds-v%FREETDS_VER%-win-%ARCH%-vs%VS_VER% freetds/vs%VS_VER%_%PYTHON_ARCH%
+  - "powershell appveyor\\install.ps1"
 
 build_script:
-  - "%CMD_IN_ENV% python setup.py install"
+  - "powershell appveyor\\build_script.ps1"
 
-artifacts:
-  - path: "dist\\*"
+before_test:
+  - "powershell appveyor\\before_test.ps1"
 
 test_script:
-  - "%PYTHON%\\python.exe setup.py test"
+  - "powershell appveyor\\test_script.ps1"
 
 after_test:
-  # If tests are successful, create binary packages for the project.
-  - "%CMD_IN_ENV% python setup.py bdist_wheel"
+  - "powershell appveyor\\after_test.ps1"
