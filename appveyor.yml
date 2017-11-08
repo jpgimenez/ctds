@@ -2,9 +2,6 @@ skip_commits:
   # Mimic Travis-ci skip behavior.
   message: /ci skip/
 
-image:
-  - Visual Studio 2015
-
 environment:
 
   # As defined by Appveyor.
@@ -13,8 +10,6 @@ environment:
   BUILD_INSTALL_PREFIX: "C:\\usr\\local"
 
   CIBW_SKIP: cp26-* cp27-*
-
-  FREETDS_VERSION: 1.00.70
 
   matrix:
 #  - PYTHON: "C:\\Python26-x64"
@@ -61,7 +56,6 @@ cache:
   -  '%BUILD_INSTALL_PREFIX% -> appveyor.yml'
 
 install:
-  - "powershell appveyor\\install.ps1"
   - "%PYTHON%\\python.exe -m pip install wheel"
 
 build: off
