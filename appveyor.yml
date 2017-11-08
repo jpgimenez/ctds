@@ -42,9 +42,9 @@ install:
 
 before_build:
   # OpenSSL
-  - appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z || (ping -n 10 127.0.0.1 >"nul:" & appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z)
-  - 7z x openssl-%OPENSSL_VER%-vs%VS_VER%.7z
-  - ren openssl-%OPENSSL_VER%-vs%VS_VER% openssl
+#  - appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z || (ping -n 10 127.0.0.1 >"nul:" & appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z)
+#  - 7z x openssl-%OPENSSL_VER%-vs%VS_VER%.7z
+#  - ren openssl-%OPENSSL_VER%-vs%VS_VER% openssl
   # FreeTDS
   - "rmdir /s /q freetds\\vs%VS_VER%_%PYTHON_ARCH% || cmd /c \"exit /b 0\""
   - appveyor DownloadFile https://github.com/ramiro/freetds/releases/download/v%FREETDS_VER%/freetds-v%FREETDS_VER%-win-%ARCH%-vs%VS_VER%.zip
