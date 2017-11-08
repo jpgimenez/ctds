@@ -44,6 +44,17 @@ cache:
 install:
   - "%PYTHON%\\python.exe -m pip install wheel"
 
+  # Prepend current Python and scripts dirs to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+  # Upgrade to the latest version of pip to avoid it displaying warnings
+  # about it being out of date.
+  - "pip install --disable-pip-version-check --user --upgrade pip"
+  - "pip install -e ."
+
+
 before_build:
   # OpenSSL
   - appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z || (ping -n 10 127.0.0.1 >"nul:" & appveyor DownloadFile http://www.npcglib.org/~stathis/downloads/openssl-%OPENSSL_VER%-vs%VS_VER%.7z)
