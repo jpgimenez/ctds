@@ -8,3 +8,6 @@ fi
 if [ "$TRAVIS_OS_NAME" != "osx" ]; then
     make check_${TRAVIS_PYTHON_VERSION};
 fi
+
+pip install cibuildwheel==0.6.0
+cibuildwheel --output-dir wheelhouse
